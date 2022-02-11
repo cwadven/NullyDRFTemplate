@@ -31,6 +31,7 @@ THIRD_APPS = [
 
 # Django startapp
 PROJECT_APPS = [
+    "crud"
 ]
 
 PROJECT_SETTING_APPS = [
@@ -114,6 +115,8 @@ JWT_AUTH = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'config.authorization.authentication.DefaultAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
 }
 
