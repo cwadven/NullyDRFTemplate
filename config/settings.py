@@ -31,7 +31,6 @@ THIRD_APPS = [
 
 # Django startapp
 PROJECT_APPS = [
-    "crud"
 ]
 
 PROJECT_SETTING_APPS = [
