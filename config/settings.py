@@ -2,11 +2,13 @@ import datetime
 import os
 from pathlib import Path
 
+import logging
+
 from .ENV import SECRET_KEY
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = SECRET_KEY
+logger = logging.getLogger('django')
 
 DEBUG = True
 
@@ -117,6 +119,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+    'EXCEPTION_HANDLER': 'config.exceptions.api_exception.custom_exception_handler'
 }
 
 LANGUAGE_CODE = 'en-us'
