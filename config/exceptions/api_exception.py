@@ -98,6 +98,7 @@ def custom_exception_handler(exc, context):
         return response
     else:
         STATUS_RSP_INTERNAL_ERROR['message'] = STATUS_RSP_INTERNAL_ERROR.pop('default_message', None)
+        STATUS_RSP_INTERNAL_ERROR['data'] = None
         STATUS_RSP_INTERNAL_ERROR.pop('lang_message', None)
         return Response(STATUS_RSP_INTERNAL_ERROR, status=200)
 
