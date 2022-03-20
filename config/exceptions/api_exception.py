@@ -65,7 +65,8 @@ def custom_exception_handler(exc, context):
                 }
             }
             
-            STATUS_RSP_INTERNAL_ERROR['keywords'] = ['mandatory_key', 'mandatory_key'] 를 넣을 수 있다.
+            CustomDictException(STATUS_RSP_INTERNAL_ERROR, {"키": "내용", "키": "내용"}) 으로 추가 가능
+            code 부분을 추가적인 내용을 넣는 방식으로 사용
             """
             code = exc.detail.get('code')
 
@@ -80,6 +81,10 @@ def custom_exception_handler(exc, context):
                 msg = exc.detail.get(
                     'default_message'
                 )
+
+            if exc.args[1:]:
+                for key, val in exc.args[1].items():
+                    response.data[key] = val
 
             response.data.pop('default_message', None)
             response.data.pop('lang_message', None)
