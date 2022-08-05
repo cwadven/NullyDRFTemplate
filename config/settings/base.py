@@ -1,13 +1,10 @@
-import datetime
 import os
 from pathlib import Path
 
 import logging
 
-from .ENV import SECRET_KEY
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = SECRET_KEY
 logger = logging.getLogger('django')
 
 DEBUG = True
@@ -83,13 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -105,21 +95,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-JWT_AUTH = {
-    'JWT_SECRET_KEY': SECRET_KEY,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
-}
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'config.authorization.authentication.DefaultAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'EXCEPTION_HANDLER': 'config.exceptions.api_exception.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'config.middleware.api_exception.custom_exception_handler'
 }
 
 LANGUAGE_CODE = 'en-us'

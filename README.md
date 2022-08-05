@@ -92,11 +92,65 @@ Project Root
 
 ### 1. 기본 설정
 
-config 파일에 `ENV.py` 파일 생성 후, `SECRET_KEY` 정의
+#### 1. config 파일에 `ENV.py` 파일 생성 후, `SECRET_KEY` 정의
 
 ```text
 SECRET_KEY = 'DJANGO_SECRET_KEY 정의'
 ```
+
+#### ENV.py 틀
+```python
+env_production = {
+    'SECRET_KEY': 'django_secret_key',
+    'KAKAO_API_KEY': 'kakao_api_key',
+    'KAKAO_SECRET_KEY': 'kakao_secret_key',
+    'CHANNEL_LAYERS': {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': [('127.0.0.1', 6379)],
+            },
+        },
+    },
+    'CACHEOPS_REDIS': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 10,
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '데이터베이스명',
+        'USER': '접속할유저명',
+        'PASSWORD': '접속할비밀번호',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'use_unicode': True,
+        },
+        'TEST': {
+            'NAME': 'test_데이터베이스명',
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        }
+    },
+    'EMAIL_HOST_USER': '이메일주소@주소.com',
+    'EMAIL_HOST_PASSWORD': '이메일비밀번호',
+    'AWS_IAM_ACCESS_KEY': 'IAMACCESSKEY',
+    'AWS_IAM_SECRET_ACCESS_KEY': 'IAMSECRETACCESSKEY',
+    'AWS_S3_BUCKET_NAME': 'S3BUCKETNAME',
+}
+```
+
+#### 2. 환경변수 설정
+
+```shell
+# production 설정
+export DJANGO_SETTINGS_MODULE=config.settings.production
+```
+
+만약 설정을 하지 않은 경우 settings 는 development.py 를 바라봅니다.
 
 ### 2. temp_static 폴더 생성
 

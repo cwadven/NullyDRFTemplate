@@ -4,9 +4,7 @@ from rest_framework.views import exception_handler
 from rest_framework import exceptions
 from rest_framework.response import Response
 
-from config.exceptions.custom_exceptions import CustomDictException
 from config.settings import logger
-from config.exceptions.exception_codes import STATUS_RSP_INTERNAL_ERROR
 
 
 def custom_exception_handler(exc, context):
@@ -50,48 +48,9 @@ def custom_exception_handler(exc, context):
         elif isinstance(exc, exceptions.ValidationError):
             code = response.status_code
             msg = exc.detail
-        elif isinstance(exc, CustomDictException):
-            """
-            APIException dictionary instance process
-            For Localization Error Control
-            
-            아래와 같은 형태 필요
-            STATUS_RSP_INTERNAL_ERROR = {
-                'code': 'internal-error',
-                'default_message': 'unknown error occurred.',
-                'lang_message': {
-                    'ko': '알 수 없는 오류.',
-                    'en': 'unknown error occurred.',
-                }
-            }
-            
-            CustomDictException(STATUS_RSP_INTERNAL_ERROR, {"키": "내용", "키": "내용"}) 으로 추가 가능
-            code 부분을 추가적인 내용을 넣는 방식으로 사용
-            """
-            code = exc.detail.get('code')
-
-            if hasattr(context['request'], 'LANGUAGE_CODE'):
-                language_code = context['request'].LANGUAGE_CODE
-                msg = exc.detail.get(
-                    'lang_message'
-                ).get(
-                    language_code
-                )
-            else:
-                msg = exc.detail.get(
-                    'default_message'
-                )
-
-            if exc.args[1:]:
-                for key, val in exc.args[1].items():
-                    response.data[key] = val
-
-            response.data.pop('default_message', None)
-            response.data.pop('lang_message', None)
         else:
             code = response.status_code
             msg = "unknown error"
-
 
         response.status_code = 200
         response.data['code'] = code
@@ -99,11 +58,9 @@ def custom_exception_handler(exc, context):
         response.data['data'] = None
 
         response.data.pop('detail', None)
-
         return response
     else:
-        STATUS_RSP_INTERNAL_ERROR['message'] = STATUS_RSP_INTERNAL_ERROR.pop('default_message', None)
-        STATUS_RSP_INTERNAL_ERROR['data'] = None
-        STATUS_RSP_INTERNAL_ERROR.pop('lang_message', None)
-        return Response(STATUS_RSP_INTERNAL_ERROR, status=200)
-
+        return Response({
+            "code": "internal-error",
+            "default_message": "unknown error occurred.",
+        }, status=200)
