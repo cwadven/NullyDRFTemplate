@@ -172,6 +172,11 @@ python manage.py collectstatic --no-input
 python manage.py runserver
 ```
 
+### 5. celery 세팅
+```shell
+celery -A config worker --loglevel=INFO --pool=solo
+```
+
 ### ETC. 
 
 #### 1. GitHub Action 설정
