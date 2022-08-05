@@ -26,6 +26,8 @@ THIRD_APPS = [
     'django_seed',
     'rest_framework',
     'corsheaders',
+    'django_celery_results',
+    'cacheops',
 ]
 
 # Django startapp
