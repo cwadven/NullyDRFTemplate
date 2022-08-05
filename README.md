@@ -174,6 +174,7 @@ python manage.py runserver
 
 ### 5. celery 세팅
 ```shell
+# redis 설치 필요
 celery -A config worker --loglevel=INFO --pool=solo
 ```
 
