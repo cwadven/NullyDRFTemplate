@@ -25,10 +25,10 @@ CACHEOPS_DEFAULTS = {
     'timeout': 60 * 15
 }
 CACHEOPS = {
-    'common.*': {'ops': 'all', 'timeout': 60*15},
-    'banner.*': {'ops': 'all', 'timeout': 60*15},
-    'community.*': {'ops': 'all', 'timeout': 60*15},
-    'tag.*': {'ops': 'all', 'timeout': 60*15},
+    # 'common.*': {'ops': 'all', 'timeout': 60*15},
+    # 'banner.*': {'ops': 'all', 'timeout': 60*15},
+    # 'community.*': {'ops': 'all', 'timeout': 60*15},
+    # 'tag.*': {'ops': 'all', 'timeout': 60*15},
 }
 
 # CELERY SETTINGS
