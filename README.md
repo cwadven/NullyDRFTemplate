@@ -11,10 +11,13 @@
 [edit . 2022-02-09]
 
 - Github Clone 으로 DRF 프로젝트를 빠르게 생성하기 위한 Template
+- celery
+- cacheops
+- github actions
 
 ## Project Duration
 
-[edit . 2022-02-09]
+[edit . 2022-08-05]
 
 2022-02-09 ~ 
 
@@ -88,7 +91,7 @@ Project Root
 
 ## Usage
 
-[edit . 2022-02-09]
+[edit . 2022-08-05]
 
 ### 1. 기본 설정
 
