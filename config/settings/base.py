@@ -22,10 +22,10 @@ DJANGO_APPS = [
 
 # pip 설치 APP
 THIRD_APPS = [
-    "debug_toolbar",
-    "django_seed",
-    "rest_framework",
-    "corsheaders",
+    'debug_toolbar',
+    'django_seed',
+    'rest_framework',
+    'corsheaders',
 ]
 
 # Django startapp
@@ -49,14 +49,14 @@ DJANGO_MIDDLEWARE = [
 ]
 
 THIRD_MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_MIDDLEWARE
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'config.urls'
