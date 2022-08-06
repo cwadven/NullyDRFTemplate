@@ -32,6 +32,7 @@ THIRD_APPS = [
 
 # Django startapp
 PROJECT_APPS = [
+    'account',
 ]
 
 PROJECT_SETTING_APPS = [
@@ -62,6 +63,8 @@ INTERNAL_IPS = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+AUTH_USER_MODEL = 'account.User'
 
 TEMPLATES = [
     {
