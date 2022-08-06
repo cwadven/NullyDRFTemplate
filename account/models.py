@@ -31,10 +31,10 @@ class UserType(models.Model):
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=45, blank=True, null=True, db_index=True, unique=True)
-    # user_type = models.ForeignKey(UserType, models.DO_NOTHING, db_column='user_type_id', blank=True, null=True)
-    # user_status = models.ForeignKey(UserStatus, models.DO_NOTHING, db_column='user_status_id', blank=True, null=True)
-    # user_provider = models.ForeignKey(UserProvider, models.DO_NOTHING, db_column='user_provider_id', blank=True, null=True)
-    # img = models.CharField(max_length=256, blank=True, null=True)
+    user_type = models.ForeignKey(UserType, models.DO_NOTHING, db_column='user_type_id', blank=True, null=True)
+    user_status = models.ForeignKey(UserStatus, models.DO_NOTHING, db_column='user_status_id', blank=True, null=True)
+    user_provider = models.ForeignKey(UserProvider, models.DO_NOTHING, db_column='user_provider_id', blank=True, null=True)
+    img = models.CharField(max_length=256, blank=True, null=True)
 
     class Meta:
         managed = True
