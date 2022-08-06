@@ -101,10 +101,10 @@ Docker 설정을 하지 않을 경우 바로 밑에 `기본설정` 부터 가이
 
 ```shell
 # MySQL 실행
-docker-compose -f mysql-server.yml up
+docker-compose -f mysql-server.yml up -d
 
 # Redis 실행
-docker-compose -f redis-server.yml up
+docker-compose -f redis-server.yml up -d
 ```
 
 ### 1. 기본 설정
