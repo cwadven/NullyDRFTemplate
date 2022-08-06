@@ -92,3 +92,10 @@ def paging(request, default_size=10):
     except APIException as e:
         raise APIException(e)
     return start_row, end_row
+
+
+def get_request_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        return x_forwarded_for.split(',')[0]
+    return request.META.get('REMOTE_ADDR')
