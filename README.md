@@ -8,12 +8,14 @@
 
 ## Project Introduce
 
-[edit . 2022-02-09]
+[edit . 2022-08-07]
 
 - Github Clone 으로 DRF 프로젝트를 빠르게 생성하기 위한 Template
-- celery
-- cacheops
-- github actions
+- 비동기 처리 Celery
+- 캐시 서버 Redis Cacheops
+- Random Model Object Create
+- CI/CD Github Actions
+- TestCase Github Actions
 
 ## Project Duration
 
@@ -23,9 +25,24 @@
 
 ## Technologies Used
 
-[edit . 2022-02-09]
+[edit . 2022-08-07]
+
+#### Framework
 
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+
+#### CI/CD
+
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
+#### Database
+
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
+
+#### Others
+
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
 
 ## Developer Information
 
@@ -43,9 +60,34 @@
 
 ```
 Project Root
+├── 📂 docker
+│    └── 📂 mysql_server
+│         ├── 📂 log
+│         ├── 📂 data
+│         └── 📂 conf.d
+│              └── 📜 my.cnf
+│
 ├── 📂 config
-│    ├── 📜 settings.py
-│    ├── 🔒 ENV.py
+│    ├── 📂 settings
+│    │    ├── 📜 base.py
+│    │    ├── 📜 development.py
+│    │    ├── 📜 production.py
+│    │    └── 📜 ENV.py  
+│    │
+│    ├── 📂 test_helper
+│    │    └── 📜 helper.py  
+│    │
+│    ├── 📂 middleware
+│    │    └── 📜 api_extension.py
+│    │
+│    ├── 📂 authorization
+│    │    └── 📜 authentication.py
+│    │
+│    ├── 📂 common
+│    │    ├── 📜 enums.py
+│    │    └── 📜 response_codes.py  
+│    │
+│    ├── 📜 celery.py
 │    ├── 📜 asgi.py
 │    ├── 📜 urls.py
 │    └── 📜 wsgi.py
@@ -58,14 +100,16 @@ Project Root
 │              └── 📜 gitaction.py     # GitAction 설정용 Command
 │                                    
 ├── 📂 App Name
-│    ├── 📂 migrations                                     
+│    ├── 📂 migrations
+│    ├── 📂 test              
+│    │    └── 📂 view_tests.py
+│    │                      
 │    ├── 📜 admin.py                                  
 │    ├── 📜 app.py
 │    ├── 📜 forms.py
-│    ├── 📜 tests.py
 │    ├── 📜 urls.py
 │    ├── 📜 views.py
-│    └── 📜 modles.py  
+│    └── 📜 models.py  
 │  
 ├── 📂 App Name
 │    ├── 📂 migrations                                     
@@ -84,6 +128,12 @@ Project Root
 ├── 📂 templates
 │    └── base.html    
 │
+├── 📜 common_library.py
+├── 📜 common_decorator.py
+├── 📜 manage.py
+├── 📜 redis-server.yml
+├── 📜 mysql-server.yml
+├── 📋 command.cron                                      # cron
 ├── 🗑 .gitignore                                        # gitignore
 ├── 🗑 requirements.txt                                  # requirements.txt
 └── 📋 README.md                                        # Readme
@@ -150,8 +200,8 @@ env_production = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '데이터베이스명',
-        'USER': '접속할유저명',
-        'PASSWORD': '접속할비밀번호',
+        'USER': 'root',
+        'PASSWORD': 'root(초기도커설정)',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -177,7 +227,7 @@ env_development = {
 }
 ```
 
-#### 2. 환경변수 설정
+#### 2. 환경 변수 설정
 
 ```shell
 # production 설정
