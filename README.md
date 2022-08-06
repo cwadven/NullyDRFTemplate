@@ -101,7 +101,7 @@ Project Root
 SECRET_KEY = 'DJANGO_SECRET_KEY 정의'
 ```
 
-#### ENV.py 틀
+#### ENV.py 틀 (settings 폴더 안에 생성합니다.)
 ```python
 env_production = {
     'SECRET_KEY': 'django_secret_key',
@@ -143,6 +143,10 @@ env_production = {
     'AWS_IAM_ACCESS_KEY': 'IAMACCESSKEY',
     'AWS_IAM_SECRET_ACCESS_KEY': 'IAMSECRETACCESSKEY',
     'AWS_S3_BUCKET_NAME': 'S3BUCKETNAME',
+}
+
+env_development = {
+    ...
 }
 ```
 
