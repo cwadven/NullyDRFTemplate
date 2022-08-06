@@ -95,13 +95,9 @@ Project Root
 
 ### 1. 기본 설정
 
-#### 1. config 파일에 `ENV.py` 파일 생성 후, `SECRET_KEY` 정의
+#### 1. config/settings 폴더에 `ENV.py` 파일 생성 후 아래와 같이 정의
 
-```text
-SECRET_KEY = 'DJANGO_SECRET_KEY 정의'
-```
-
-#### ENV.py 틀 (settings 폴더 안에 생성합니다.)
+#### ENV.py 틀
 ```python
 env_production = {
     'SECRET_KEY': 'django_secret_key',
