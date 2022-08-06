@@ -1,5 +1,7 @@
 from rest_framework.exceptions import APIException
 
+from config.common.reponse_codes import PageSizeMaximumException
+
 
 def mandatory_key(request, *args: str) -> dict:
     """
@@ -77,3 +79,16 @@ def optional_key(request, *args: dict) -> dict:
                 data_obj.update({key: data})
 
     return data_obj
+
+
+def paging(request, default_size=10):
+    try:
+        page = int(request.GET.get('page', 1)) - 1
+        size = int(request.GET.get('size', default_size))
+        if size > 30:
+            raise PageSizeMaximumException()
+        start_row = page * size
+        end_row = (page + 1) * size
+    except APIException as e:
+        raise APIException(e)
+    return start_row, end_row
