@@ -1,14 +1,18 @@
+import string
 import uuid
 import boto3 as boto3
+from random import random
 from botocore.config import Config
 from botocore.exceptions import ClientError
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import QuerySet, Max
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from rest_framework.exceptions import APIException
+from typing import Optional
 
 from config.common.reponse_codes import PageSizeMaximumException
 
@@ -104,6 +108,10 @@ def paging(request, default_size=10):
     return start_row, end_row
 
 
+def get_max_int_from_queryset(qs: QuerySet, field_name: str) -> Optional[int]:
+    return qs.aggregate(_max=Max(field_name)).get('_max')
+
+
 def get_request_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -152,3 +160,13 @@ def send_email(title: str, html_body_content: str, payload: dict, to: list) -> N
         html_message=message,
         fail_silently=False,
     )
+
+
+def generate_random_string_digits(length: int = 4) -> str:
+    """랜덤한 ascii_letters or digits 를 합성하여 _length 길이만큼 생성한다.
+    예) QD5M9hGo2i => _length = 10
+
+    :param length: int
+    :return: str
+    """
+    return ''.join(random.choice(string.digits) for _ in range(length))
