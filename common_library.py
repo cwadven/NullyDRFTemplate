@@ -1,4 +1,8 @@
+import uuid
 import boto3 as boto3
+from botocore.config import Config
+from botocore.exceptions import ClientError
+
 from django.conf import settings
 
 from rest_framework.exceptions import APIException
