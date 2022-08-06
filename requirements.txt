@@ -27,6 +27,7 @@ importlib-metadata==4.10.1
 jmespath==1.0.1
 kombu==5.2.4
 Markdown==3.3.6
+mysqlclient @ file://mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl
 packaging==21.3
 prompt-toolkit==3.0.30
 psycopg2-binary==2.9.3

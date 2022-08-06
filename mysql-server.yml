@@ -9,14 +9,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
     volumes:
+      - ./docker/mysql_server/conf.d:/etc/mysql/conf.d
       - ./docker/mysql_server/data:/var/lib/mysql
       - ./docker/mysql_server/log:/var/log/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-    networks:
-      - mbridge
-
-networks:
-  mbridge:
-    external: true
