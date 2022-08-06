@@ -93,6 +93,20 @@ Project Root
 
 [edit . 2022-08-05]
 
+## With Docker
+
+Docker 설정을 하지 않을 경우 바로 밑에 `기본설정` 부터 가이드를 따르세요!
+
+---
+
+```shell
+# MySQL 실행
+docker-compose -f mysql-server.yml up
+
+# Redis 실행
+docker-compose -f redis-server.yml up
+```
+
 ### 1. 기본 설정
 
 #### 1. config/settings 폴더에 `ENV.py` 파일 생성 후 아래와 같이 정의
@@ -155,7 +169,7 @@ export DJANGO_SETTINGS_MODULE=config.settings.production
 
 만약 설정을 하지 않은 경우 settings 는 development.py 를 바라봅니다.
 
-### 2. temp_static 폴더 생성
+### 2. temp_static 폴더 프로젝트 폴더에 생성
 
 - collectstatic 위한 의존성 폴더 생성
 
