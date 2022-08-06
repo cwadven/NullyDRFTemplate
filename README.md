@@ -107,6 +107,23 @@ docker-compose -f mysql-server.yml up -d
 docker-compose -f redis-server.yml up -d
 ```
 
+#### 데이터베이스 설정
+```shell
+# mysql 도커 cli 실행 후 mysql 초기 접속
+mysql -u root -p
+비밀번호 root
+
+# 데이터베이스 생성
+CREATE DATABASE 데이터베이스명;
+
+# 루트 비밀번호 변경
+ALTER user 'root'@'%' IDENTIFIED WITH mysql_native_password BY '변경 비밀번호';
+FLUSH PRIVILEGES;
+
+# settings 폴더에 있는 python 파일에 비밀번호 수정
+```
+
+
 ### 1. 기본 설정
 
 #### 1. config/settings 폴더에 `ENV.py` 파일 생성 후 아래와 같이 정의
