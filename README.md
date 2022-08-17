@@ -167,6 +167,7 @@ mysql -u root -p
 CREATE DATABASE 데이터베이스명;
 
 # 루트 비밀번호 변경
+# mysql 8.0 이상은 mysql_native_password 로 비밀변호 생성 필요
 ALTER user 'root'@'%' IDENTIFIED WITH mysql_native_password BY '변경 비밀번호';
 FLUSH PRIVILEGES;
 
