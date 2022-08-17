@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from account.managers import CustomUserManager
+
 
 class UserProvider(models.Model):
     name = models.CharField(max_length=45)
@@ -35,6 +37,8 @@ class User(AbstractUser):
     user_status = models.ForeignKey(UserStatus, models.DO_NOTHING, db_column='user_status_id', blank=True, null=True)
     user_provider = models.ForeignKey(UserProvider, models.DO_NOTHING, db_column='user_provider_id', blank=True, null=True)
     img = models.CharField(max_length=256, blank=True, null=True)
+
+    objects = CustomUserManager()
 
     class Meta:
         managed = True
