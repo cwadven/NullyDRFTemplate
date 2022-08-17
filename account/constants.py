@@ -5,7 +5,7 @@ from config.common.reponse_codes import LeaveUserException, BlackUserException, 
 
 class SocialTypeSelector(IntValueSelector):
     """
-    데이터 베이스에 2, 3, 4 로 UserProvider 와 의미가 같아야 합니다.
+    데이터베이스에 2, 3, 4 로 UserProvider 와 의미가 같아야 합니다.
     """
     KAKAO_SOCIAL_TYPE = (2, KakaoSocialType)
     NAVER_SOCIAL_TYPE = (3, NaverSocialType)
@@ -13,6 +13,9 @@ class SocialTypeSelector(IntValueSelector):
 
 
 class UserStatusExceptionTypeSelector(IntValueSelector):
+    """
+    데이터베이스에 2, 3, 4 로 UserStatus 와 의미가 같아야 합니다.
+    """
     LEAVE_USER_EXCEPTION = (2, LeaveUserException)
     BLACK_USER_EXCEPTION = (3, BlackUserException)
     DORMANT_USER_EXCEPTION = (4, DormantUserException)
