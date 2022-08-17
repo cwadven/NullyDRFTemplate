@@ -7,6 +7,11 @@ from .ENV import env_production
 SECRET_KEY = env_production['SECRET_KEY']
 KAKAO_API_KEY = env_production['KAKAO_API_KEY']
 KAKAO_SECRET_KEY = env_production['KAKAO_SECRET_KEY']
+NAVER_API_KEY = env_production['NAVER_API_KEY']
+NAVER_SECRET_KEY = env_production['NAVER_SECRET_KEY']
+GOOGLE_CLIENT_ID = env_production['GOOGLE_CLIENT_ID']
+GOOGLE_SECRET_KEY = env_production['GOOGLE_SECRET_KEY']
+GOOGLE_REDIRECT_URL = env_production['GOOGLE_REDIRECT_URL']
 
 AWS_IAM_ACCESS_KEY = env_production['AWS_IAM_ACCESS_KEY']
 AWS_IAM_SECRET_ACCESS_KEY = env_production['AWS_IAM_SECRET_ACCESS_KEY']
