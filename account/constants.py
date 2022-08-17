@@ -1,5 +1,6 @@
 from account.social_login_helper.social_login_helpers import KakaoSocialType, NaverSocialType, GoogleSocialType
 from config.common.enums import IntValueSelector
+from config.common.reponse_codes import LeaveUserException, BlackUserException, DormantUserException
 
 
 class SocialTypeSelector(IntValueSelector):
@@ -9,3 +10,9 @@ class SocialTypeSelector(IntValueSelector):
     KAKAO_SOCIAL_TYPE = (2, KakaoSocialType)
     NAVER_SOCIAL_TYPE = (3, NaverSocialType)
     GOOGLE_SOCIAL_TYPE = (4, GoogleSocialType)
+
+
+class UserStatusExceptionTypeSelector(IntValueSelector):
+    LEAVE_USER_EXCEPTION = (2, LeaveUserException)
+    BLACK_USER_EXCEPTION = (3, BlackUserException)
+    DORMANT_USER_EXCEPTION = (4, DormantUserException)

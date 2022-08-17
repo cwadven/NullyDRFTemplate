@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from account.constants import UserStatusExceptionTypeSelector
 from account.managers import CustomUserManager
 
 
@@ -43,3 +44,7 @@ class User(AbstractUser):
     class Meta:
         managed = True
         db_table = 'account_user'
+
+    def raise_if_inaccessible(self):
+        if self.user_status_id != 1:
+            raise UserStatusExceptionTypeSelector(self.user_status_id).selector()
