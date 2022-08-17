@@ -12,9 +12,15 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from rest_framework.exceptions import APIException
+from rest_framework_jwt.settings import api_settings
 from typing import Optional
 
 from config.common.reponse_codes import PageSizeMaximumException
+
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 
 
 def mandatory_key(request, *args: str) -> dict:
@@ -106,6 +112,12 @@ def paging(request, default_size=10):
     except APIException as e:
         raise APIException(e)
     return start_row, end_row
+
+
+def get_login_token(user):
+    payload = jwt_payload_handler(user)
+    token = jwt_encode_handler(payload)
+    return token
 
 
 def get_max_int_from_queryset(qs: QuerySet, field_name: str) -> Optional[int]:
