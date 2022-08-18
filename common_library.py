@@ -15,6 +15,7 @@ from rest_framework.exceptions import APIException
 from rest_framework_jwt.settings import api_settings
 from typing import Optional
 
+from account.models import User
 from config.common.reponse_codes import PageSizeMaximumException
 
 
@@ -101,7 +102,7 @@ def optional_key(request, *args: dict) -> dict:
     return data_obj
 
 
-def paging(request, default_size=10):
+def paging(request, default_size: int = 10) -> tuple:
     try:
         page = int(request.GET.get('page', 1)) - 1
         size = int(request.GET.get('size', default_size))
@@ -114,7 +115,7 @@ def paging(request, default_size=10):
     return start_row, end_row
 
 
-def get_login_token(user):
+def get_login_token(user: User) -> str:
     payload = jwt_payload_handler(user)
     token = jwt_encode_handler(payload)
     return token
@@ -124,14 +125,14 @@ def get_max_int_from_queryset(qs: QuerySet, field_name: str) -> Optional[int]:
     return qs.aggregate(_max=Max(field_name)).get('_max')
 
 
-def get_request_ip(request):
+def get_request_ip(request) -> str:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         return x_forwarded_for.split(',')[0]
     return request.META.get('REMOTE_ADDR')
 
 
-def generate_presigned_url(file_name, expires_in=1000):
+def generate_presigned_url(file_name: str, expires_in: int = 1000) -> str:
     s3_client = boto3.client(
         's3',
         region_name='ap-northeast-2',
