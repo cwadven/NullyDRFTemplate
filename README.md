@@ -16,6 +16,7 @@
 - Random Model Object Create
 - CI/CD Github Actions
 - TestCase Github Actions
+- 회원 및 소셜 로그인 기능 제공 (카카오, 네어버, 구글)
 
 ## Project Duration
 
