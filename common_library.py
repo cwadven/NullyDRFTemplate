@@ -8,6 +8,7 @@ from botocore.exceptions import ClientError
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db.models import QuerySet, Max
+from django.http import HttpRequest
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
@@ -24,7 +25,7 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 
 
-def mandatory_key(request, *args: str) -> dict:
+def mandatory_key(request: HttpRequest, *args: str) -> dict:
     """
     args each type: string
 
@@ -61,7 +62,7 @@ def mandatory_key(request, *args: str) -> dict:
     return data_obj
 
 
-def optional_key(request, *args: dict) -> dict:
+def optional_key(request: HttpRequest, *args: dict) -> dict:
     """
     args each type: dictionary -> {"key": value}
 
@@ -102,7 +103,7 @@ def optional_key(request, *args: dict) -> dict:
     return data_obj
 
 
-def paging(request, default_size: int = 10) -> tuple:
+def paging(request: HttpRequest, default_size: int = 10) -> tuple:
     try:
         page = int(request.GET.get('page', 1)) - 1
         size = int(request.GET.get('size', default_size))
@@ -125,7 +126,7 @@ def get_max_int_from_queryset(qs: QuerySet, field_name: str) -> Optional[int]:
     return qs.aggregate(_max=Max(field_name)).get('_max')
 
 
-def get_request_ip(request) -> str:
+def get_request_ip(request: HttpRequest) -> str:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         return x_forwarded_for.split(',')[0]
