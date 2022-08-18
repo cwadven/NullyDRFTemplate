@@ -1,7 +1,7 @@
 from django.contrib.auth.models import UserManager
 
 from account.constants import SocialTypeSelector
-from account.social_login_helper.social_login_helpers import SocialLoginController
+from account.helpers.social_login_helpers import SocialLoginController
 
 
 class CustomUserManager(UserManager):
