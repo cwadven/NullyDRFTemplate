@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 from django.conf import settings
 
-from config.common.reponse_codes import LoginFailedException
+from config.common.exception_codes import LoginFailedException
 
 
 class SocialType(ABC):

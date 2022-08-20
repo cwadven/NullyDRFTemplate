@@ -1,6 +1,6 @@
 from account.helpers.social_login_helpers import KakaoSocialType, NaverSocialType, GoogleSocialType
 from config.common.enums import IntValueSelector
-from config.common.reponse_codes import LeaveUserException, BlackUserException, DormantUserException, \
+from config.common.exception_codes import LeaveUserException, BlackUserException, DormantUserException, \
     UnknownPlatformException
 
 
