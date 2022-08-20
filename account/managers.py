@@ -8,7 +8,7 @@ class CustomUserManager(UserManager):
     def get_or_create_user_by_token(self, token: str, provider: int) -> tuple:
         is_created = False
         data = SocialLoginController(
-            SocialTypeSelector(provider).selector()
+            SocialTypeSelector(int(provider)).selector()
         ).validate(token)
 
         try:
@@ -19,8 +19,8 @@ class CustomUserManager(UserManager):
         except self.model.DoesNotExist:
             user = self.create(
                 username=data['id'],
-                # user_type_id=3,
-                # user_status_id=1,
+                user_type_id=3,
+                user_status_id=1,
                 user_provider_id=provider,
             )
             is_created = True
