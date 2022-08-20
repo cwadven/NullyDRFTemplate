@@ -17,90 +17,51 @@ from rest_framework_jwt.settings import api_settings
 from typing import Optional
 
 from account.models import User
-from config.common.reponse_codes import PageSizeMaximumException
-
+from config.common.reponse_codes import PageSizeMaximumException, MissingMandatoryParameterException
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 
 
-def mandatory_key(request: HttpRequest, *args: str) -> dict:
-    """
-    args each type: string
-
-    each dictionary string represent check request from key
-    if there is not value raise Error
-
-    example:
-    mandatory_data = mandatory_key(request, "username", "password")
-
-    returns:
-    {'username': 'root', 'password': 'root'}
-    """
-    data_obj = dict()
-
-    for key in args:
+def mandatory_key(request, name):
+    try:
+        if request.method == 'GET':
+            data = request.GET[name]
+        else:
+            data = request.POST[name]
+        if data in ['', None]:
+            raise MissingMandatoryParameterException()
+    except:
         try:
-            data = request.GET[key]
-
-            if request.method == 'GET':
-                data_obj.update({key: data})
-            else:
-                data_obj.update({key: data})
-            if data == "":
-                raise APIException(f"missing mandatory key '{key}'")
+            json_body = request.data
+            data = json_body[name]
+            if data in ['', None]:
+                raise MissingMandatoryParameterException()
         except:
-            try:
-                data = request.data[key]
-                data_obj.update({key: data})
-                if data == "":
-                    raise APIException(f"missing mandatory key '{key}'")
-            except:
-                raise APIException(f"missing mandatory key '{key}'")
+            raise MissingMandatoryParameterException()
 
-    return data_obj
+    return data
 
 
-def optional_key(request: HttpRequest, *args: dict) -> dict:
-    """
-    args each type: dictionary -> {"key": value}
-
-    each dictionary key represent check request from key
-    each dictionary value represent default value if there is not value
-
-    example:
-    optional_data = optional_key(request, {"username": "123"}, {"password": "124"}, {"dd": 123})
-
-    returns:
-    {'username': 'root', 'password': 'root', 'dd': 123}
-    """
-    data_obj = dict()
-    for arg in args:
-        key, default_value = [[key, value] for key, value in arg.items()][0]
+# 선택 값
+def optional_key(request, name, default_value=''):
+    try:
+        if request.method == 'GET':
+            data = request.GET[name]
+        else:
+            data = request.POST[name]
+        if data in ['', None]:
+            data = default_value
+    except:
         try:
-            data = request.GET[key]
-
-            if data in ["", None, 'null', 'undefined']:
+            json_body = request.data
+            data = json_body[name]
+            if data in ['', None]:
                 data = default_value
-
-            if request.method == 'GET':
-                data_obj.update({key: data})
-            else:
-                data_obj.update({key: data})
         except:
-            try:
-                data = request.data[key]
-
-                if data in ["", None, 'null', 'undefined']:
-                    data = default_value
-
-                data_obj.update({key: data})
-            except:
-                data = default_value
-                data_obj.update({key: data})
-
-    return data_obj
+            data = default_value
+    return data
 
 
 def paging(request: HttpRequest, default_size: int = 10) -> tuple:
