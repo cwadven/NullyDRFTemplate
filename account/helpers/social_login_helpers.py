@@ -50,7 +50,7 @@ class SocialType(ABC):
             data={
                 'grant_type': 'authorization_code',
                 "client_id": self.client_id,
-                "client_secret": self.secret_id,
+                "client_secret": self.secret,
                 "redirect_uri": self.redirect_uri,
                 "code": code
             }
