@@ -1,6 +1,7 @@
 from account.helpers.social_login_helpers import KakaoSocialType, NaverSocialType, GoogleSocialType
 from config.common.enums import IntValueSelector
-from config.common.reponse_codes import LeaveUserException, BlackUserException, DormantUserException
+from config.common.reponse_codes import LeaveUserException, BlackUserException, DormantUserException, \
+    UnknownPlatformException
 
 
 class SocialTypeSelector(IntValueSelector):
@@ -10,6 +11,10 @@ class SocialTypeSelector(IntValueSelector):
     KAKAO_SOCIAL_TYPE = (2, KakaoSocialType)
     NAVER_SOCIAL_TYPE = (3, NaverSocialType)
     GOOGLE_SOCIAL_TYPE = (4, GoogleSocialType)
+
+    @classmethod
+    def _missing_(cls, value):
+        raise UnknownPlatformException()
 
 
 class UserStatusExceptionTypeSelector(IntValueSelector):
