@@ -264,38 +264,30 @@ python manage.py runserver
 celery -A config worker --loglevel=INFO --pool=solo
 ```
 
-### ETC. 
+### ETC.
 
-#### 1. GitHub Action 설정
+#### 1. Django 테스트 케이스 실행
+
+Pycharm 혹은 shell 을 이용할 때 settings 파일 경로를 환경변수에 설정 합시다.
+`--keepdb` 를 사용하지 않으면 디비를 지웠다가 생성합니다. 
 
 ```shell
-python manage.py gitaction Action파일명 (option -n "파일명" -b "브랜치명" -s "push" -p "step명")
-
-# 예제 
-python manage.py gitaction blank -n 'CI/CD' -b 'master' -s 'push' -p '[{"name": "aaa", "run": "ccc"}, {"name": "bbb", "run": "ccc"}]'
+python manage.py test --keepdb
 ```
 
-**결과**
-```yaml
-name: CI/CD
-
-on:
-  push:
-    branch: [ master ]
-
-jobs:
-  build:
-    runs-on: self-hosted
-
-    steps:
-    - name: aaa
-      run: |
-        ccc
-
-    - name: bbb
-      run: |
-        ccc
+아래와 같은 에러가 나올 경우 
+```shell
+Got an error creating the test database: (1044, "Access denied for user 'XXX'@'localhost' to database ...
 ```
+
+database 에 접속하여 해당 데이터베이스에 접근할 수 있는 권한을 줍니다.
+
+```mysql
+GRANT ALL PRIVILEGES ON 테스트데이터베이스명.* TO `유저명`@`localhost`;
+FLUSH PRIVILEGES;
+```
+
+<br>
 
 #### 2. 랜덤 데이터 추가
 
