@@ -94,7 +94,7 @@ def get_request_ip(request: HttpRequest) -> str:
     return request.META.get('REMOTE_ADDR')
 
 
-def generate_presigned_url(file_name: str, expires_in: int = 1000) -> str:
+def generate_presigned_url(file_name, _type='common', unique=0, expires_in=1000):
     s3_client = boto3.client(
         's3',
         region_name='ap-northeast-2',
@@ -103,17 +103,26 @@ def generate_presigned_url(file_name: str, expires_in: int = 1000) -> str:
         config=Config(signature_version='s3v4')
     )
     try:
-        url = s3_client.generate_presigned_url(
-            ClientMethod='put_object',
-            Params={
-                'Bucket': settings.AWS_S3_BUCKET_NAME,
-                'Key': f'{uuid.uuid4()}_{file_name}'
-            },
+        response = s3_client.generate_presigned_post(
+            Bucket=settings.AWS_S3_BUCKET_NAME,
+            Key=f'{_type}/{unique}/{uuid.uuid4()}_{file_name}',
             ExpiresIn=expires_in
         )
-        return url
+        return response
     except ClientError as e:
-        raise APIException(e)
+        return None
+
+
+def upload_file_to_presigned_url(presined_url, presigned_data, file):
+    try:
+        response = requests.post(
+            url=presined_url,
+            data=presigned_data,
+            files={'file': file}
+        )
+        return response.status_code
+    except:
+        return 400
 
 
 def send_email(title: str, html_body_content: str, payload: dict, to: list) -> None:
